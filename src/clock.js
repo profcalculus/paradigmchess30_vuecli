@@ -1,7 +1,4 @@
-'use strict';
-let clock = new Vue ({
-  el: '#clock',
-  data: {
+let clock = function() ({
     name: 'clock',
     mode: 'standard',
     extratime: 2,
@@ -45,9 +42,7 @@ let clock = new Vue ({
       title: '',
       content: '',
     },
-  },
-  methods: {
-    run: function () {
+      run: function () {
       if (['white', 'black'].indexOf (this.runstate) < 0) {
         if (this.timer) {
           clearTimeout (this.timer);
@@ -176,8 +171,8 @@ let clock = new Vue ({
     maintime: function () {
       let form_t = this.form.maintime;
       return 3600 * form_t.h + 60 * form_t.m + form_t.s;
+
     },
-  },
 });
 
 function formatTime (sec) {

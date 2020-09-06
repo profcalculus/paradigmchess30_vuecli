@@ -12,6 +12,7 @@
   "dependencies": {
     "chess.js": "^0.11.0",
     "chessboardjs": "0.0.1",
+    "jquery": "^3.5.1",
     "vue": "^2.5.11"
   },
   "browserslist": [

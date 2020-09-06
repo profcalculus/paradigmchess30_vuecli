@@ -1,6 +1,5 @@
 /* esversion:6 */
-// import Chess from 'chess.js';
-const { Chess } = require('chess.js');
+import Chess from 'chess.js';
 import assert from 'assert';
 
 ChessP30.prototype = Object.create (Chess.prototype, {
