@@ -1,0 +1,15 @@
+-rw-r--r-- 1 charles charles 52074 Aug 21 17:43 /home/charles/projects/testchessjs/js/chess_p30.js
+-rw-r--r-- 1 charles charles 50971 Jun 29 14:52 /home/charles/projects/old_paradigm30/infinityfree_website/htdocs/demo1/js/chess_p30.js
+-rw-r--r-- 1 charles charles 50971 Jul  1 16:18 /home/charles/projects/old_paradigm30/dev/js/chess_p30.js
+-rw-r--r-- 1 charles charles 3326 Sep  9 22:24 /home/charles/projects/paradigmchess30_vuecli/paradigmchess30/src/components/chess_p30.js
+-rw-r--r-- 1 charles charles 52082 Aug 16 10:28 /home/charles/projects/css_sandpit/js/chess_p30.js
+-rw-r--r-- 1 charles charles 51771 Jul 16 10:57 /home/charles/projects/prev_paradigmchess30/app/static/js/chess_p30.js
+-rw-r--r-- 1 charles charles 50971 Jul  1 16:33 /home/charles/projects/paradigmchess30_old/app/static/js/chess_p30.js
+-rw-r--r-- 1 charles charles 58039 Jul 27 12:59 /home/charles/projects/js-oop/chess_p30.js
+-rw-r--r-- 1 charles charles 53927 Aug 31 10:29 /home/charles/projects/demo1_with_clock/demo1A/js/chess_p30.js
+-rw-r--r-- 1 charles charles 53927 Aug 30 22:38 /home/charles/projects/demo1_with_clock/demo1A_dev/js/chess_p30.js
+-rw-r--r-- 1 charles charles 52027 Jul 28 18:13 /home/charles/projects/paradigmchess30/app/static/js/chess_p30.js
+-rw-r--r-- 1 charles charles 54047 Sep  8 09:41 /home/charles/projects/paradigmchess30/demo1_website/experimental/demo1A/js/chess_p30.js
+-rw-r--r-- 1 charles charles 53926 Sep  9 20:44 /home/charles/projects/paradigmchess30/demo1_website/htdocs/demo1A/js/chess_p30.js
+-rw-r--r-- 1 charles charles 50971 Aug 31 11:23 /home/charles/projects/paradigmchess30/demo1_website/htdocs/demo1/js/chess_p30.js
+-rw-r--r-- 1 charles charles 50732 May 28 22:21 /home/charles/projects/thirdparty/chessboardjs/website/js/chess_p30.js

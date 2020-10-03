@@ -1,0 +1,20 @@
+<template>
+  <div class="row">
+    <div class="col-6">
+      <Board board_id="board1" size="medium" orientation="black"></Board>
+    </div>
+  </div>
+</template>
+
+<script>
+import EventBus from './event-bus.js';
+import Board from "./components/Board.vue";
+export default {
+  components: {
+    Board,
+  },
+};
+</script>
+
+<style >
+</style>

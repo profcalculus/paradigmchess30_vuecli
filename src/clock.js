@@ -1,113 +1,95 @@
-let clock = function() ({
-    name: 'clock',
-    mode: 'standard',
-    extratime: 2,
-    runstate: 'pause',
-    player_white: 'White',
-    player_black: 'Black',
-    white: {
-      maintime: 300,
-      extratime: 2,
-    },
-    black: {
-      maintime: 300,
-      extratime: 2,
-    },
-    toplay: 'white',
-    timer: null,
-    form: {
-      mode: 'standard',
-      maintime: {
-        h: 0,
-        m: 5,
-        s: 0,
-      },
-      extratime: 2,
-    },
-    modes: [
-      {
-        value: 'standard',
-        text: 'Standard',
-      },
-      {
-        value: 'increment',
-        text: 'Increment',
-      },
-      {
-        value: 'delay',
-        text: 'Delay',
-      },
-    ],
-    options: {
-      title: '',
-      content: '',
-    },
-      run: function () {
-      if (['white', 'black'].indexOf (this.runstate) < 0) {
-        if (this.timer) {
-          clearTimeout (this.timer);
-          this.timer = null;
-        }
-        return;
+/* ecmaVersion:6 */
+
+export class Clock {
+  constructor(config) {
+    this.config = config;
+    this.name = 'clock';
+    this.mode = config.clock_config.mode;
+    this.maintime = config.clock_config.maintime;
+  this.extratime  = config.clock_config.extratime;
+
+    this.white = {
+      name: config.white,
+      maintime: this.maintime,
+      extratime: this.extratime,
+    };
+    this.black = {
+      name: config.black,
+      maintime: this.maintime,
+      extratime: this.extratime,
+    };
+    this.toplay = 'white';
+    this.timer = null;
+  
+    // this.useConfig ();
+    this.reset ();
+  } // constructor
+
+  // useConfig () {
+  //   Object.assign (this.config, this);
+  // }
+  run () {
+    if (['white', 'black'].indexOf (this.runstate) < 0) {
+      if (this.timer) {
+        clearTimeout (this.timer);
+        this.timer = null;
       }
-      console.log ('run()');
-      let times = this[this.toplay];
-      if (this.mode === 'delay') {
-        if (times.extratime > 0) {
-          times.extratime -= 1;
-        } else {
-          times.maintime -= 1;
-        }
+      return;
+    }
+    let times = this[this.toplay];
+    if (this.mode === 'delay') {
+      if (times.extratime > 0) {
+        times.extratime -= 1;
       } else {
         times.maintime -= 1;
       }
-      if (times.maintime <= 0) {
-        this.runstate = 'pause';
-      }
-      console.log (
-        `After run(): ${this.toplay} : ${this[this.toplay].maintime}`
-      );
-      clearTimeout (this.timer);
-      this.timer = setTimeout (this.run, 1000);
-    },
+    } else {
+      times.maintime -= 1;
+    }
+    if (times.maintime <= 0) {
+      this.runstate = 'pause';
+    }
+    clearTimeout (this.timer);
+    this.timer = setTimeout (this.run, 1000);
+  }
 
-    reset: function () {
-      console.log ('reset()');
-      ['white', 'black'].forEach (player => {
-        ['maintime', 'extratime'].forEach (time => {
-          this[player][time] = this[time];
-        });
+  reset () {
+    ['white', 'black'].forEach (player => {
+      ['maintime', 'extratime'].forEach (time => {
+        this[player][time] = this[time];
       });
-      this.toplay = 'white';
-      this.runstate = 'pause';
-    },
+    });
+    this.toplay = 'white';
+    this.runstate = 'reset';
+  }
 
-    start: function (player) {
-      console.log (`start(${player})`);
-      if (!player) {
-        player = this.toplay;
-      }
-      if (player.maintime <= 0){
-          return;
-      }
-      this.runstate = player;
-      this.toplay = player;
-      switch (this.mode) {
-        case 'delay':
-          this[player].extratime = this.extratime;
-          break;
-        case 'increment':
-          this[player].maintime += this.extratime;
-          break;
-        default:
-          break;
-      }
-      this.run ();
-    },
-    pause: function () {
-      console.log ('pause');
-      this.runstate = 'pause';
-    },
+  start (player) {
+    player = player || this.toplay;
+    console.log (`start(${player})`);
+    if (player.maintime <= 0) {
+      return;
+    }
+    if (this.mode === 'increment' && this.runstate !== 'reset') {
+      // Don't add time to black on move 1
+      let opponent = player === 'white' ? 'black' : 'white';
+      this[opponent].maintime += this.opponent.extratime;
+    }
+    this.runstate = player;
+    this.toplay = player;
+    if (this.mode === 'delay') {
+      this[player].extratime = this.extratime;
+    } else if (this.mode === '') this.run ();
+  }
+  pause () {
+    this.runstate = 'pause';
+  }
+  newGame () {
+    this.reset ();
+  }
+}
+
+
+/* Move these functions to Clock.vue 
     onFormOk: function (evt) {
       this.mode = this.form.mode;
       this.extratime = this.form.extratime;
@@ -129,15 +111,7 @@ let clock = function() ({
       }
       return this[player].maintime > 10 ? 'text-dark' : 'text-danger';
     },
-    newGame: function () {
-      this.reset ();
-      newGame ();
-    },
-    fixPGN: function () {
-        console.log('fixPGN() called');
-        console.log(this.player_white, this.player_black);
-      window.pgnHeader (this.player_white, this.player_black);
-    },
+
   },
   filters: {
     time_display: function (txt) {
@@ -171,7 +145,6 @@ let clock = function() ({
     maintime: function () {
       let form_t = this.form.maintime;
       return 3600 * form_t.h + 60 * form_t.m + form_t.s;
-
     },
 });
 
@@ -196,3 +169,4 @@ function split_time (sec) {
 function capitalise (str) {
   return str.charAt (0).toUpperCase () + str.slice (1);
 }
+*/

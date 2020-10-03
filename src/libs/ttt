@@ -1,0 +1,78 @@
+  function attacked (color, square) {
+    // Does any [color] piece attack [square]?
+    for (let i = SQUARES.a8; i <= SQUARES.h1; i++) {
+      /* did we run off the end of the board \*/
+      if (i & 0x88) {
+        i += 7;
+        continue;
+      }
+
+      /* if empty square or wrong color \*/
+      if (board[i] == null || board[i].color !== color) continue;
+
+      let piece = board[i];
+      let difference = i - square;
+      let index = difference + 119;
+
+      if (ATTACKS[index] & (1 << SHIFTS[piece.type])) {
+        if (piece.type === PAWN) {
+          if (difference > 0) {
+            if (piece.color === WHITE) return true;
+          } else {
+            if (piece.color === BLACK) return true;
+          }
+          continue;
+        }
+
+        /* if the piece is a knight or a king \*/
+        if (piece.type === 'n' || piece.type === 'k') return true;
+        if (piece.type === 'b') {
+          if (legal_dragon_bishop_move (i, square)) {
+            return true;
+          }
+          let blocking_offset = null;
+          switch (difference) {
+            case -33:
+            case -31:
+              blocking_offset = +16;
+              break;
+            case -18:
+            case +14:
+              blocking_offset = +1;
+              break;
+            case -14:
+            case +18:
+              blocking_offset = -1;
+              break;
+            case +33:
+            case +31:
+              blocking_offset = -16;
+              break;
+          }
+          if (blocking_offset) {
+            let blocking_square = i + blocking_offset;
+            if (board[blocking_square] == null) {
+              return true;
+            }
+          }
+        }
+
+        let offset = RAYS[index];
+        let j = i + offset;
+
+        let blocked = false;
+        while (j !== square) {
+          if (board[j] != null) {
+            blocked = true;
+            break;
+          }
+          j += offset;
+        }
+
+        if (!blocked) return true;
+      }
+    }
+
+    return false;
+  }
+
